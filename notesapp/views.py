@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from notesapp.models import Note
 
-def notes(request):
+def index(request):
     latest_notes_list = Note.objects.order_by('pub_date')
     context = {
         'latest_notes_list': latest_notes_list}

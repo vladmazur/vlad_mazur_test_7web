@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^notes/', include('notesapp.urls')),
+    url(r'^$', include('notesapp.urls')),
 )
