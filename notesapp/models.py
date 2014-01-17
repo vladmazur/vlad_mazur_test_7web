@@ -18,8 +18,8 @@ class Note(models.Model):
     title = 	models.CharField(max_length=200)
     text = 		models.TextField()
     pub_date = 	models.DateTimeField('date published')
-    author = 	models.ForeignKey(Author)
-    tags = 		models.ManyToManyField(Tag, related_name='notes')
+    author = 	models.ForeignKey(Author, blank=True, null=True)
+    # tags = 		models.ManyToManyField(Tag, related_name='notes')
 
     def __unicode__ (self):
     	return self.title

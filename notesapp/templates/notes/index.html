@@ -10,7 +10,7 @@
 
     <title>Notes for testTask</title>
 
-	{% load staticfiles %}
+    {% load staticfiles %}
 
     <!-- Bootstrap core CSS -->
     <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
@@ -49,6 +49,8 @@
               	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
             	</div><!--/span-->
             {% endfor %}
+          {% else %}
+            <h2>No notes are available</h2>
        		{% endif %}
           </div><!--/row-->
         </div><!--/span-->
