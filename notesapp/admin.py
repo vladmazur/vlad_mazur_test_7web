@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from notesapp.models import Author, Note, Tag
+from notesapp.models import Author, Note
 
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'pub_date')
@@ -10,4 +10,4 @@ class NoteAdmin(admin.ModelAdmin):
 
 admin.site.register(Author)
 admin.site.register(Note, NoteAdmin)
-admin.site.register(Tag)
+# admin.site.register(Tag)
