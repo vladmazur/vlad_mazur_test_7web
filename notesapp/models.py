@@ -34,3 +34,4 @@ class NoteForm(ModelForm):
         fields = ['title', 'text', 'author']
 
     title = forms.CharField(max_length=200, min_length=4)
+    text = forms.CharField(min_length=10, widget = forms.Textarea)

@@ -4,7 +4,7 @@ import datetime
 
 from django.utils import timezone
 from django.test import TestCase, RequestFactory
-from views import NotesListView
+from views import NotesListAndFormView
 
 # from django.core.urlresolvers import reverse
 
@@ -41,7 +41,7 @@ class NoteViewTests(TestCase):
     def test_list_view(self):
         request = self.factory.get('/notes/')
         # additional params can go after request
-        response = NotesListView.as_view()(request)
+        response = NotesListAndFormView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_view_with_a_past_note(self):
@@ -52,7 +52,7 @@ class NoteViewTests(TestCase):
         n2 = create_note(title="Past note", days= -10)
 
         request = self.factory.get('/notes/')
-        response = NotesListView.as_view()(request)
+        response = NotesListAndFormView.as_view()(request)
         self.assertEqual(response.status_code, 200)
         context = response.context_data
         self.assertEqual(context['note_list'][0], n1)
@@ -66,7 +66,7 @@ class NoteViewTests(TestCase):
         n2 = create_note(title="Future note", days= 10)
 
         request = self.factory.get('/notes/')
-        response = NotesListView.as_view()(request)
+        response = NotesListAndFormView.as_view()(request)
         self.assertEqual(response.status_code, 200)
         context = response.context_data
 
