@@ -39,18 +39,25 @@
             <p>This is a test task for Vlad Mazur. Try some responsive-range viewport sizes to see it in action.</p>
           </div>
           <div class="row">
-
-       		{% for note in object_list %}
-       			<div class="col-6 col-sm-6 col-lg-4">
-              	<h2>{{note.title}}</h2>
-              	<h3><small>{{note.author}}, {{note.pub_date}}</small></h3>
-              	<p>{{note.text}}</p>
-              	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            	</div><!--/span-->
-          {% empty %}
-            <h2>No notes are available</h2>
-       		{% endfor %}
+         		{% for note in object_list %}
+         			<div class="col-6 col-sm-6 col-lg-4">
+                	<h2>{{note.title}}</h2>
+                	<h3><small>{{note.author}}, {{note.pub_date}}</small></h3>
+                	<p>{{note.text}}</p>
+                	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+              	</div><!--/span-->
+            {% empty %}
+              <h2>No notes are available</h2>
+         		{% endfor %}
           </div><!--/row-->
+          <div class="jumbotron">
+            <h2>Add a note:</h1>
+            <form action="/" method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <input type="submit" value="Add" />
+            </form>
+          </div>
         </div><!--/span-->
       </div><!--/row-->
 
