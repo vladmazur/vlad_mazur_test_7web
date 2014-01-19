@@ -3,10 +3,12 @@
 import datetime
 
 from django.utils import timezone
-from django.test import TestCase
-from django.core.urlresolvers import reverse
+from django.test import TestCase, RequestFactory
+from views import NotesListView
 
-from notesapp.models import Note, Author, Tag
+# from django.core.urlresolvers import reverse
+
+from notesapp.models import Note, Author
 
 def create_author(name):
 	return Author(name = name, email = "dow@gmail.com")
@@ -33,24 +35,40 @@ class NoteViewTests(TestCase):
     #     self.assertContains(response, "No notes are available")
     #     self.assertQuerysetEqual(response.context['latest_notes_list'], [])
 
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_list_view(self):
+        request = self.factory.get('/notes/')
+        # additional params can go after request
+        response = NotesListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_index_view_with_a_past_note(self):
         """
         Notes with a pub_date in the past should be displayed on the index page.
         """
-        create_note(title="Past note", days= -10)
-        response = self.client.get('/notes/')
-        self.assertQuerysetEqual(
-            response.context['latest_notes_list'],
-            ['<Note: add>', '<Note: title>', '<Note: Past note>']
-        )
+        n1 = Note.objects.get(id=1)
+        n2 = create_note(title="Past note", days= -10)
+
+        request = self.factory.get('/notes/')
+        response = NotesListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        context = response.context_data
+        self.assertEqual(context['note_list'][0], n1)
+        self.assertEqual(context['note_list'][1], n2)
 
     def test_index_view_with_a_future_note(self):
         """
         Notes with a pub_date in the past should be displayed on the index page.
         """
-        create_note(title="Future note", days= 10)
-        response = self.client.get('/notes/')
+        n1 = Note.objects.get(id=1)
+        n2 = create_note(title="Future note", days= 10)
+
+        request = self.factory.get('/notes/')
+        response = NotesListView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['latest_notes_list'], ['<Note: add>', '<Note: title>'])
-        # self.assertContains(response, "No notes are available")
-        # несколько нотов из fixtures будут видны
+        context = response.context_data
+
+        self.assertEqual(context['note_list'][0], n1)
+        self.assertEqual(context['note_list'][1], n2)
