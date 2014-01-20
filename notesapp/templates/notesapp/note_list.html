@@ -44,18 +44,36 @@
                 	<h2>{{note.title}}</h2>
                 	<h3><small>{{note.author}}, {{note.pub_date}}</small></h3>
                 	<p>{{note.text}}</p>
-                	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                	<!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
               	</div><!--/span-->
             {% empty %}
               <h2>No notes are available</h2>
          		{% endfor %}
           </div><!--/row-->
           <div class="jumbotron">
-            <h2>Add a note:</h1>
-            <form action="/" method="POST">
+
+            <form action="/" method="post" class="form">
+              <legend>Add a note</legend>
               {% csrf_token %}
-              {{ form.as_p }}
-              <input type="submit" value="Add" />
+              {{ form.non_field_errors }}
+              <div class="fieldWrapper">
+                {{ form.title.errors }}
+                <input name="title" id="id_title" type="text" class="form-control" placeholder="Title">
+              </div>
+              <div class="fieldWrapper">
+                {{ form.text.errors }}
+                <textarea name="text" for="id_title" class="form-control input-xxlarge" placeholder="Text"></textarea>
+              </div>
+              <div class="fieldWrapper">
+                {{ form.author.errors }}
+                <select for="id_author" name="author" class = "form-control">
+                  {% for x,y in form.fields.author.choices %}
+                    <option value="{{ x }}">{{ y }}</option>
+                  {% endfor %}            
+              </select>
+              </div>
+              <div class="modal-footer">
+              <button class="btn btn-primary" type="submit">Add</button> </div>
             </form>
           </div>
         </div><!--/span-->
