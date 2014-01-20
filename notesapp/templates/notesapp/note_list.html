@@ -77,7 +77,8 @@
                   <a class="close" data-dismiss="alert" href="#">×</a>{{ error }}
                 </div>
                 {% endfor %}
-                <select for="id_author" name="author" class = "form-control">
+                <select id="id_author" name="author" class="selectpicker form-control" title="Author">
+                  <option>Select author</option>
                   {% for id, name in form.fields.author.choices %}
                     <option value="{{ id }}">{{ name }}</option>
                   {% endfor %}            
