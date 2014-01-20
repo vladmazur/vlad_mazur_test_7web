@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^notes/', include('notesapp.urls')),
-    url(r'^$', include('notesapp.urls')),
+    url(r'^notes/', include('hellodjango.apps.notesapp.urls')),
+    url(r'^$', include('hellodjango.apps.notesapp.urls')),
 )

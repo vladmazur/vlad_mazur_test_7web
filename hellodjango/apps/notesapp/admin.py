@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from notesapp.models import Author, Note
+from hellodjango.apps.notesapp.models import Author, Note
 
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'pub_date')
